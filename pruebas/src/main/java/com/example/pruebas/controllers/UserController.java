@@ -1,6 +1,7 @@
 package com.example.pruebas.controllers;
 
 import com.example.pruebas.Services.ThirdPartyService;
+import com.example.pruebas.businessLogic.ValidateUser;
 import com.example.pruebas.model.ThirdPartyUser;
 import com.example.pruebas.model.User;
 import com.example.pruebas.repositories.UserRepository;
@@ -21,6 +22,12 @@ public class UserController {
    @PostMapping("/users")
     public void saveUser(@RequestBody User user){
        ThirdPartyUser thirdPartyUser = thirdPartyService.getThirdPartyUser(user.getId());
+       ValidateUser validateUser = new ValidateUser(thirdPartyUser);
+       if(validateUser.isAdult()){
+       userRepository.save(user);
+       }
    }
+
+
 
 }
