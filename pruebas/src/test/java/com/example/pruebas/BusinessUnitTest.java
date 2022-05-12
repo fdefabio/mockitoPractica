@@ -3,6 +3,7 @@ package com.example.pruebas;
 import com.example.pruebas.Services.ThirdPartyService;
 import com.example.pruebas.controllers.UserController;
 import com.example.pruebas.model.ThirdPartyUser;
+import com.example.pruebas.model.User;
 import com.example.pruebas.repositories.UserRepository;
 import net.bytebuddy.build.ToStringPlugin;
 import org.junit.Test;
@@ -13,9 +14,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
-
 import java.time.LocalDate;
 import java.time.Month;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BusinessUnitTest {
@@ -44,7 +45,7 @@ public class BusinessUnitTest {
                 .builder()
                 .id(id)
                 .firstName(name)
-                .LastName(lastName)
+                .lastName(lastName)
                 .maritalStatus("single")
                 .isAdmin(true)
                 .birtday(LocalDate.of(1990, Month.APRIL,5))
@@ -52,7 +53,25 @@ public class BusinessUnitTest {
 
         Mockito.when(thirdPartyService.getThirdPartyUser(id))
                 .thenReturn(mockedUser);
+
+        User userRegister = User
+                .builder()
+                .id(id)
+                .firstName(name)
+                .lastName(lastName)
+                .maritalStatus("single")
+                .isAdmin(true)
+                .birtday(LocalDate.of(1990, Month.APRIL,5))
+                .build();
+
+        userController.saveUser(userRegister);
+
+        verify(userRepository , times(1))
+                .save(userRegister);
+
     }
+
+
 
 
 

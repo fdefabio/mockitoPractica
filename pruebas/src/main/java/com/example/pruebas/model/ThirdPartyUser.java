@@ -14,7 +14,7 @@ import java.time.LocalDate;
 public class ThirdPartyUser {
     private Long id;
     private String firstName;
-    private String LastName;
+    private String lastName;
     private String maritalStatus;
     private boolean isAdmin;
     private LocalDate birtday;
